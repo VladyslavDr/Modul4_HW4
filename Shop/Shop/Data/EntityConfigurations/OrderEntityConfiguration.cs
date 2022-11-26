@@ -14,7 +14,7 @@ namespace Shop.Data.EntityConfigurations
         public void Configure(EntityTypeBuilder<OrderEntity> builder)
         {
             builder.ToTable("Orders").HasKey(h => h.OrderId);
-            builder.Property(p => p.OrderDate).HasColumnType("datetime2").HasMaxLength(7).IsRequired();
+            builder.Property(p => p.OrderDate).HasMaxLength(7).IsRequired();
 
             builder.HasOne(h => h.Shipper)
                 .WithMany(w => w.Orders)

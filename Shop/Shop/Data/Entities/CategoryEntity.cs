@@ -11,6 +11,6 @@ namespace Shop.Data.Entities
         public int CategoryId { get; set; }
         public string CategoryName { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public List<ProductEntity> Categories { get; set; } = new List<ProductEntity>();
+        public List<ProductEntity> Products { get; set; } = new List<ProductEntity>();
     }
 }

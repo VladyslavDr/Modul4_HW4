@@ -18,6 +18,6 @@ namespace Shop.Data.Entities
         public int CategoryId { get; set; }
         public CategoryEntity Category { get; set; } = null!;
 
-        public List<OrderDetailEntity> Details { get; set; } = new List<OrderDetailEntity>();
+        public List<OrderDetailEntity> OrderDetails { get; set; } = new List<OrderDetailEntity>();
     }
 }
