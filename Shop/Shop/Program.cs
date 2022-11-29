@@ -1,18 +1,30 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Net;
+using System.Numerics;
+using Microsoft.EntityFrameworkCore;
 using Shop.Data;
+using Shop.Services;
+using Shop.Repositories;
+using Microsoft.Extensions.Logging;
 
 var factory = new ApplicationDbContextFactory();
+var context = factory.CreateDbContext(new string[0]);
 
-using (var context = factory.CreateDbContext(new string[0]))
+var loggerFactory = LoggerFactory.Create(builder =>
 {
-    var products = context.Categories.ToList();
-    foreach (var product in products)
-    {
-        Console.WriteLine(product.CategoryName);
-    }
+    builder.AddConsole();
+});
 
-    /*
-    context.Remove(products[0]);
-    context.SaveChanges();
-    */
-}
+var logger = loggerFactory.CreateLogger<CustomerService>();
+
+var customerRepository = new CustomerRepository(context);
+
+var cusomerService = new CustomerService(customerRepository, logger);
+
+var name = "name1";
+var address = "address1";
+var email = "email1@gmail.com";
+var phone = "phone1";
+
+cusomerService.AddCustomer(name, address, email, phone);
+
+Console.WriteLine(cusomerService.GetCustomer(1).Name);
