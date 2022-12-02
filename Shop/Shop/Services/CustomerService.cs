@@ -25,10 +25,26 @@ namespace Shop.Services
             _loggerService = loggerService;
         }
 
-        public void AddCustomer(string name, string address, string email, string phone)
+        public int AddCustomer(string name, string address, string email, string phone)
         {
-            _customerRepository.AddCustomer(name, address, email, phone);
+            var id = _customerRepository.AddCustomer(name, address, email, phone);
             _loggerService.LogInformation($"Created customer Name: {name}, Address: {address}, Email: {email}, Phone: {phone}");
+
+            return id;
+        }
+
+        public void DeleteCustomer(int id)
+        {
+            CustomerEntity? customer = _customerRepository.GetCustomer(id);
+
+            if (customer == null)
+            {
+                _loggerService.LogInformation($"Not founded customer with Id = {id}");
+                throw new NullReferenceException();
+            }
+
+            _customerRepository.DeleteCustomer(customer);
+            _loggerService.LogInformation($"Delete сustomer with Id = {customer.CustomerId}");
         }
 
         public Customer GetCustomer(int id)

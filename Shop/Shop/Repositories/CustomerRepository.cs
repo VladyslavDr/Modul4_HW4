@@ -5,8 +5,10 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.EntityFrameworkCore;
 using Shop.Data;
 using Shop.Data.Entities;
+using Shop.Models;
 
 namespace Shop.Repositories
 {
@@ -19,7 +21,7 @@ namespace Shop.Repositories
             _dbContext = dbContext;
         }
 
-        public void AddCustomer(string name, string address, string email, string phone)
+        public int AddCustomer(string name, string address, string email, string phone)
         {
             var customer = new CustomerEntity()
             {
@@ -31,11 +33,19 @@ namespace Shop.Repositories
 
             _dbContext.Customers.Add(customer);
             _dbContext.SaveChanges();
+
+            return customer.CustomerId;
         }
 
         public CustomerEntity? GetCustomer(int id)
         {
             return _dbContext.Customers.FirstOrDefault(f => f.CustomerId == id);
+        }
+
+        public void DeleteCustomer(CustomerEntity customer)
+        {
+            _dbContext.Customers.Remove(customer);
+            _dbContext.SaveChanges();
         }
     }
 }

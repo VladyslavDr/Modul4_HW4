@@ -25,6 +25,9 @@ var address = "address1";
 var email = "email1@gmail.com";
 var phone = "phone1";
 
-cusomerService.AddCustomer(name, address, email, phone);
+var customer1 = cusomerService.AddCustomer(name, address, email, phone);
+var customer2 = cusomerService.AddCustomer(name, address, email, phone);
 
-Console.WriteLine(cusomerService.GetCustomer(1).Name);
+cusomerService.DeleteCustomer(customer1);
+
+Console.WriteLine(cusomerService.GetCustomer(customer2).Name);
